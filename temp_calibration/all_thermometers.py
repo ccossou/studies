@@ -91,13 +91,17 @@ def get_fit(x, ys, names, fig=None):
     # model = ExpressionModel("a * x**2 + b", name="square")
     model = ExpressionModel("a * x + b", name="linear")
 
-    colors = ["r", "g", "b", "#ff00ff", "#00ffff"]
+    # source: https://matplotlib.org/stable/gallery/color/named_colors.html
+    colors = ["tab:blue", "tab:orange", "tab:green", "tab:red", "tab:purple", "tab:brown", "tab:pink", "tab:gray", "tab:olive", "tab:cyan", ]
+
 
     if fig is None:
         fig, ax = plt.subplots(figsize=(10, 7.5))
         pstyle = "+"
     else:
         ax = fig.axes[0]
+        nb_previous_items = len(ax.lines)
+        colors = colors[nb_previous_items:]
         pstyle = "*"
 
     ax.set_xlabel("Reference Temperature [°C]")
@@ -117,6 +121,8 @@ def get_fit(x, ys, names, fig=None):
         ax.plot(x, result.best_fit, color=color, label=result.model.expr)
 
     ax.legend()
+
+    return fig
 
 
 names, r_times, r_temperatures = read_temperatures(filename)
